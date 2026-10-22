@@ -1,0 +1,722 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Old Music | Golden Era</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap');
+
+:root {
+  --gold: #ffc94f;
+  --bg: #090909;
+  --card: #171717;
+  --muted: #aaa;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  padding-bottom: 105px;
+  background: var(--bg);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+}
+button, input { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, input:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+header {
+  height: 76px;
+  padding: 0 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  background: #0c0c0c;
+  border-bottom: 1px solid #252525;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--gold);
+  font: bold 27px 'Playfair Display', serif;
+  white-space: nowrap;
+}
+.logo-icon {
+  width: 43px; height: 43px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #111;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+}
+.logo small {
+  display: block;
+  color: #aaa;
+  font: 11px 'DM Sans', sans-serif;
+  margin-top: 2px;
+}
+nav { display: flex; gap: 8px; align-items: center; }
+nav button {
+  border: 0;
+  border-radius: 25px;
+  padding: 11px 13px;
+  color: #ddd;
+  background: transparent;
+}
+nav button:hover, nav button.active {
+  color: var(--gold);
+  background: #242015;
+}
+.search {
+  width: 245px;
+  border: 1px solid #393939;
+  background: #131313;
+  border-radius: 30px;
+  padding: 11px 15px;
+  color: white;
+}
+.hero {
+  min-height: 345px;
+  padding: 55px 5%;
+  display: flex;
+  align-items: center;
+  background:
+    linear-gradient(90deg, #090909 2%, rgba(9,9,9,.93) 30%,
+    rgba(9,9,9,.3) 100%),
+    url('https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=1800&q=85')
+    center 42% / cover;
+  border-bottom: 1px solid #27221a;
+}
+.hero-content { max-width: 650px; }
+.eyebrow {
+  color: var(--gold);
+  letter-spacing: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+h1 {
+  font: 700 clamp(38px, 5vw, 64px) 'Playfair Display', serif;
+  margin: 14px 0;
+  line-height: 1.12;
+}
+h1 span { color: var(--gold); }
+.hero p { color: #ddd; line-height: 1.8; }
+.primary {
+  border: 0;
+  border-radius: 30px;
+  background: var(--gold);
+  color: #111;
+  padding: 14px 25px;
+  font-weight: bold;
+  margin-top: 12px;
+  transition: transform .25s, box-shadow .25s;
+}
+.primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px #ffc94f33;
+}
+main { padding: 28px 3%; }
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 32px 5px 18px;
+}
+h2 {
+  font: 700 27px 'Playfair Display', serif;
+  margin: 0;
+}
+.gold { color: var(--gold); }
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0,1fr));
+  gap: 14px;
+}
+.category {
+  min-height: 125px;
+  text-align: left;
+  padding: 18px;
+  border: 1px solid #343434;
+  border-radius: 13px;
+  color: white;
+  background: linear-gradient(135deg,#302318,#141414 80%);
+  transition: .25s;
+}
+.category:nth-child(2) { background: linear-gradient(135deg,#451c28,#171313); }
+.category:nth-child(3) { background: linear-gradient(135deg,#21323b,#131313); }
+.category:nth-child(4) { background: linear-gradient(135deg,#17382b,#131313); }
+.category:nth-child(5) { background: linear-gradient(135deg,#4b3821,#131313); }
+.category:nth-child(6) { background: linear-gradient(135deg,#322b20,#131313); }
+.category:hover, .category.selected {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+}
+.category .emoji { display:block; font-size:27px; margin-bottom:12px; }
+.category strong { display:block; font-size:15px; }
+.category small { display:block; margin-top:6px; color:#bbb; }
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin: 16px 0 22px;
+}
+.filter {
+  color: #ddd;
+  background: #181818;
+  border: 1px solid #363636;
+  border-radius: 25px;
+  padding: 9px 16px;
+}
+.filter.active, .filter:hover {
+  color: #111;
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.song-grid {
+  display: grid;
+  grid-template-columns: repeat(6,minmax(0,1fr));
+  gap: 15px;
+}
+.song-card {
+  min-width: 0;
+  background: var(--card);
+  border: 1px solid #252525;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform .25s, border-color .25s;
+}
+.song-card:hover { transform: translateY(-5px); border-color: #76602e; }
+.cover {
+  height: 155px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg,#6b4a29,#181818);
+}
+.cover img {
+  width:100%; height:100%;
+  object-fit:cover;
+  filter: sepia(.25);
+  transition: transform .4s;
+}
+.song-card:hover img { transform: scale(1.07); }
+.play-cover {
+  position:absolute;
+  bottom:10px; right:10px;
+  width:39px; height:39px;
+  border-radius:50%;
+  border:0;
+  color:#111;
+  background:var(--gold);
+  font-size:16px;
+  box-shadow:0 4px 15px #0008;
+}
+.song-info { padding:12px; }
+.song-info h3 {
+  font-size:14px;
+  margin:0 0 7px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.song-info p { margin:0; font-size:12px; color:var(--muted); }
+.song-info .duration { margin-top:9px; font-size:11px; }
+.empty {
+  display:none;
+  color:var(--muted);
+  text-align:center;
+  padding:40px;
+}
+footer {
+  padding: 35px 20px;
+  text-align: center;
+  color: #999;
+  border-top: 1px solid #262626;
+}
+footer strong { color:var(--gold); }
+
+.player {
+  position:fixed;
+  z-index:20;
+  bottom:0; left:0; right:0;
+  min-height:85px;
+  padding:12px 3%;
+  background:rgba(16,16,16,.97);
+  backdrop-filter:blur(18px);
+  border-top:1px solid #393329;
+  display:grid;
+  grid-template-columns:1fr 1.2fr 1fr;
+  align-items:center;
+  gap:20px;
+}
+.now-playing {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+.now-playing img {
+  width:55px;height:55px;
+  border-radius:8px;
+  object-fit:cover;
+  background:#292015;
+}
+.now-playing strong, .now-playing small {
+  display:block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.now-playing strong { font-size:13px; }
+.now-playing small { color:#aaa; margin-top:6px; font-size:11px; }
+.controls { text-align:center; }
+.control-buttons {
+  display:flex; justify-content:center; align-items:center; gap:18px;
+}
+.control-buttons button {
+  background:transparent;
+  border:0; color:#ddd; font-size:19px;
+}
+.control-buttons button:hover { color:var(--gold); }
+.control-buttons .big-play {
+  width:43px;height:43px;border-radius:50%;
+  background:var(--gold);color:#111;font-size:18px;
+}
+.progress-row {
+  display:flex;align-items:center;gap:9px;
+  margin-top:7px;font-size:10px;color:#aaa;
+}
+input[type=range] {
+  accent-color:var(--gold);
+  cursor:pointer;
+  min-width:0;
+}
+#progress { width:100%; }
+.extra-controls {
+  display:flex;justify-content:flex-end;align-items:center;gap:12px;
+}
+.extra-controls label { font-size:17px; }
+#volume { width:85px; }
+.notice {
+  color:#aaa;
+  font-size:12px;
+  margin:15px 0;
+}
+@media(max-width:1050px) {
+  .category-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .song-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
+  nav { display:none; }
+}
+@media(max-width:650px) {
+  header { height:auto; min-height:70px; flex-wrap:wrap; padding:12px 4%; gap:12px; }
+  .logo { font-size:22px; }
+  .search { width:100%; order:2; }
+  .hero { min-height:320px; padding:35px 6%; background-position:center; }
+  main { padding:15px 4%; }
+  .category-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+  .category { min-height:112px; padding:13px; }
+  .song-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+  .cover { height:155px; }
+  .player {
+    padding:10px 12px;
+    grid-template-columns:1fr auto;
+    gap:8px;
+  }
+  .now-playing img { width:43px;height:43px; }
+  .controls { grid-column:2; grid-row:1; }
+  .control-buttons { gap:10px; }
+  .control-buttons button { font-size:16px; }
+  .control-buttons .big-play { width:39px;height:39px; }
+  .progress-row { display:none; }
+  .extra-controls { display:none; }
+  body { padding-bottom:75px; }
+  .section-title { margin-top:25px; }
+  h2 { font-size:23px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">♫</div>
+    <div>Old Music<small>Timeless Songs... Forever</small></div>
+  </div>
+
+  <nav>
+    <button class="active" onclick="scrollToTop()">⌂ Home</button>
+    <button onclick="showAll()">♫ All Songs</button>
+    <button onclick="selectCategory('Romantic')">♡ Romantic</button>
+    <button onclick="selectCategory('Sad')">♪ Sad Songs</button>
+  </nav>
+
+  <input id="search" class="search"
+    type="search" placeholder="⌕ Search songs, artists..."
+    aria-label="Search songs and artists">
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="eyebrow">OLD SONGS COLLECTION</div>
+    <h1>Relive the <span>Golden Era</span></h1>
+    <p>Explore timeless classics, romantic melodies and unforgettable music.<br>
+    The songs that never get old ♥</p>
+    <button class="primary" onclick="playFirst()">▶ &nbsp; Play Now</button>
+    <p class="gold" style="font-family:'Playfair Display',serif;font-style:italic">
+      Old is Gold ✨
+    </p>
+  </div>
+</section>
+
+<main>
+  <div class="section-title">
+    <h2>♫ Music <span class="gold">Collections</span></h2>
+  </div>
+
+  <div class="category-grid">
+    <button class="category" onclick="selectCategory('All')">
+      <span class="emoji">💿</span><strong>All Songs</strong>
+      <small>Explore all tracks</small>
+    </button>
+    <button class="category" onclick="selectCategory('Romantic')">
+      <span class="emoji">💛</span><strong>Romantic</strong>
+      <small>Love never gets old</small>
+    </button>
+    <button class="category" onclick="selectCategory('Sad')">
+      <span class="emoji">🎸</span><strong>Sad Songs</strong>
+      <small>Feel the emotions</small>
+    </button>
+    <button class="category" onclick="selectCategory('Party')">
+      <span class="emoji">📻</span><strong>Party</strong>
+      <small>Dance to classics</small>
+    </button>
+    <button class="category" onclick="selectCategory('Devotional')">
+      <span class="emoji">🪔</span><strong>Devotional</strong>
+      <small>Peace in every note</small>
+    </button>
+    <button class="category" onclick="selectCategory('Old Hindi')">
+      <span class="emoji">🎞️</span><strong>Old Hindi</strong>
+      <small>Evergreen hits</small>
+    </button>
+  </div>
+
+  <div class="section-title">
+    <h2>♫ <span class="gold">Top Songs</span></h2>
+    <span class="gold" style="cursor:pointer" onclick="showAll()">View All →</span>
+  </div>
+
+  <div class="filters">
+    <button class="filter active" data-filter="All" onclick="selectCategory('All')">All</button>
+    <button class="filter" data-filter="Romantic" onclick="selectCategory('Romantic')">Romantic</button>
+    <button class="filter" data-filter="Sad" onclick="selectCategory('Sad')">Sad</button>
+    <button class="filter" data-filter="Party" onclick="selectCategory('Party')">Party</button>
+    <button class="filter" data-filter="Devotional" onclick="selectCategory('Devotional')">Devotional</button>
+    <button class="filter" data-filter="Old Hindi" onclick="selectCategory('Old Hindi')">Old Hindi</button>
+  </div>
+
+  <p class="notice">Demo audio is used for playback. Add your licensed song files to enjoy your own full collection.</p>
+
+  <div class="song-grid" id="songGrid"></div>
+  <div class="empty" id="empty">No songs found. Try another search.</div>
+</main>
+
+<footer>
+  <p style="font:24px 'Playfair Display',serif;color:#ffc94f">♫ Old Music</p>
+  <p>Where every melody brings back a memory.</p>
+  <p>Made with ♥ for music lovers</p>
+  <small>Use music you own or have permission to stream.</small>
+</footer>
+
+<div class="player">
+  <div class="now-playing">
+    <img id="currentImage" alt="Current album cover"
+      src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=150&q=70">
+    <div style="min-width:0">
+      <strong id="currentTitle">Select a song</strong>
+      <small id="currentArtist">Old Music Collection</small>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="control-buttons">
+      <button title="Previous" onclick="previousSong()">|◀</button>
+      <button class="big-play" id="playButton" title="Play or pause" onclick="togglePlay()">▶</button>
+      <button title="Next" onclick="nextSong()">▶|</button>
+    </div>
+    <div class="progress-row">
+      <span id="currentTime">0:00</span>
+      <input id="progress" type="range" min="0" max="100" value="0" aria-label="Song progress">
+      <span id="duration">0:00</span>
+    </div>
+  </div>
+
+  <div class="extra-controls">
+    <label for="volume">🔊</label>
+    <input id="volume" type="range" min="0" max="1" step="0.05" value="0.7" aria-label="Volume">
+  </div>
+</div>
+
+<audio id="audio" preload="none"></audio>
+
+<script>
+const demoAudio =
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+
+const songs = [
+  {
+    title:"Golden Memories",
+    artist:"Classic Instrumental",
+    category:"Old Hindi",
+    image:"photo-1516280440614-37939bbacd81",
+    audio:demoAudio
+  },
+  {
+    title:"Romantic Evening",
+    artist:"Instrumental Melody",
+    category:"Romantic",
+    image:"photo-1516575150278-77136aed6920",
+    audio:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+  },
+  {
+    title:"Sad Memories",
+    artist:"Emotional Instrumental",
+    category:"Sad",
+    image:"photo-1470252649378-9c29740c9fa8",
+    audio:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+  },
+  {
+    title:"Party Nights",
+    artist:"Dance Instrumental",
+    category:"Party",
+    image:"photo-1492684223066-81342ee5ff30",
+    audio:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+  },
+  {
+    title:"Peaceful Moments",
+    artist:"Relaxing Instrumental",
+    category:"Devotional",
+    image:"photo-1507692049790-de58290a4334",
+    audio:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"
+  },
+  {
+    title:"Golden Sunset",
+    artist:"Vintage Instrumental",
+    category:"Old Hindi",
+    image:"photo-1470225620780-dba8ba36b745",
+    audio:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3"
+  },
+  {
+    title:"Love Forever",
+    artist:"Romantic Instrumental",
+    category:"Romantic",
+    image:"photo-1518609878373-06d740f60d8b",
+    audio:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3"
+  },
+  {
+    title:"Dreamy Night",
+    artist:"Soft Instrumental",
+    category:"Sad",
+    image:"photo-1519608487953-e999c86e7455",
+    audio:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"
+  },
+  {
+    title:"Happy Celebration",
+    artist:"Party Instrumental",
+    category:"Party",
+    image:"photo-1492684223066-81342ee5ff30",
+    audio:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3"
+  },
+  {
+    title:"Morning Prayer",
+    artist:"Peaceful Instrumental",
+    category:"Devotional",
+    image:"photo-1500530855697-b586d89ba3ee",
+    audio:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3"
+  },
+  {
+    title:"Timeless Melody",
+    artist:"Classic Instrumental",
+    category:"Old Hindi",
+    image:"photo-1511379938547-c1f69419868d",
+    audio:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3"
+  },
+  {
+    title:"Sweet Love",
+    artist:"Romantic Instrumental",
+    category:"Romantic",
+    image:"photo-1517841905240-472988babdf9",
+    audio:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3"
+  }
+];
+
+const grid = document.getElementById("songGrid");
+const audio = document.getElementById("audio");
+const search = document.getElementById("search");
+let currentIndex = -1;
+let activeCategory = "All";
+
+function coverURL(id) {
+  return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=500&q=80`;
+}
+
+function renderSongs() {
+  const query = search.value.trim().toLowerCase();
+  const filtered = songs.map((song,index)=>({...song,index})).filter(song=>{
+    const matchesCategory = activeCategory === "All" ||
+      song.category === activeCategory;
+    const matchesSearch = (song.title + " " + song.artist + " " +
+      song.category).toLowerCase().includes(query);
+    return matchesCategory && matchesSearch;
+  });
+
+  grid.innerHTML = filtered.map(song => `
+    <article class="song-card">
+      <div class="cover">
+        <img loading="lazy" src="${coverURL(song.image)}"
+          alt="${song.title.replace(/&/g,"&amp;")}"
+          onerror="this.style.display='none'">
+        <button class="play-cover" aria-label="Play song"
+          onclick="playSong(${song.index})">▶</button>
+      </div>
+      <div class="song-info">
+        <h3 title="${song.title}">${song.title}</h3>
+        <p>${song.artist}</p>
+        <p class="duration">${song.category}</p>
+      </div>
+    </article>
+  `).join("");
+
+  document.getElementById("empty").style.display =
+    filtered.length ? "none" : "block";
+
+  document.querySelectorAll(".filter").forEach(button=>{
+    button.classList.toggle("active",
+      button.dataset.filter === activeCategory);
+  });
+}
+
+function selectCategory(category) {
+  activeCategory = category;
+  renderSongs();
+  document.getElementById("songGrid").scrollIntoView({
+    behavior:"smooth", block:"start"
+  });
+}
+
+function showAll() {
+  activeCategory = "All";
+  search.value = "";
+  renderSongs();
+}
+
+function scrollToTop() {
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function playFirst() {
+  const first = songs.findIndex(song =>
+    activeCategory === "All" ||
+    song.category === activeCategory);
+  if(first >= 0) playSong(first);
+}
+
+function playSong(index) {
+  if(index < 0 || index >= songs.length) return;
+  currentIndex = index;
+  const song = songs[index];
+
+  document.getElementById("currentTitle").textContent = song.title;
+  document.getElementById("currentArtist").textContent = song.artist;
+  document.getElementById("currentImage").src = coverURL(song.image);
+
+  audio.src = song.audio;
+  audio.volume = Number(document.getElementById("volume").value);
+  document.getElementById("playButton").textContent = "Ⅱ";
+
+  audio.play().then(()=>{
+    document.getElementById("playButton").textContent = "Ⅱ";
+  }).catch(()=>{
+    document.getElementById("playButton").textContent = "▶";
+    document.getElementById("currentArtist").textContent =
+      "Press play again or check your internet connection";
+  });
+}
+
+function togglePlay() {
+  if(currentIndex === -1) {
+    playFirst();
+    return;
+  }
+  if(audio.paused) {
+    audio.play().then(()=>{
+      document.getElementById("playButton").textContent = "Ⅱ";
+    }).catch(()=>{
+      document.getElementById("playButton").textContent = "▶";
+    });
+  } else {
+    audio.pause();
+    document.getElementById("playButton").textContent = "▶";
+  }
+}
+
+function nextSong() {
+  playSong((currentIndex + 1) % songs.length);
+}
+function previousSong() {
+  if(audio.currentTime > 3) {
+    audio.currentTime = 0;
+  } else {
+    playSong((currentIndex - 1 + songs.length) % songs.length);
+  }
+}
+function formatTime(seconds) {
+  if(!Number.isFinite(seconds)) return "0:00";
+  const mins = Math.floor(seconds/60);
+  const secs = Math.floor(seconds%60);
+  return mins + ":" + String(secs).padStart(2,"0");
+}
+
+audio.addEventListener("timeupdate",()=>{
+  if(!audio.duration || !Number.isFinite(audio.duration)) return;
+  document.getElementById("progress").value =
+    audio.currentTime / audio.duration * 100;
+  document.getElementById("currentTime").textContent =
+    formatTime(audio.currentTime);
+  document.getElementById("duration").textContent =
+    formatTime(audio.duration);
+});
+
+audio.addEventListener("ended",nextSong);
+audio.addEventListener("pause",()=>{
+  document.getElementById("playButton").textContent = "▶";
+});
+audio.addEventListener("play",()=>{
+  document.getElementById("playButton").textContent = "Ⅱ";
+});
+
+document.getElementById("progress").addEventListener("input",event=>{
+  if(Number.isFinite(audio.duration) && audio.duration > 0) {
+    audio.currentTime = Number(event.target.value) / 100 * audio.duration;
+  }
+});
+
+document.getElementById("volume").addEventListener("input",event=>{
+  audio.volume = Number(event.target.value);
+});
+
+search.addEventListener("input",renderSongs);
+
+renderSongs();
+</script>
+</body>
+</html>
